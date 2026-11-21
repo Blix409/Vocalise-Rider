@@ -18,10 +18,10 @@ jobs:
   windows:
     runs-on: windows-2022
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
 
       - name: Get JUCE
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           repository: juce-framework/JUCE
           ref: ${{ env.JUCE_VERSION }}
@@ -46,18 +46,18 @@ jobs:
         shell: pwsh
         run: ./Packaging/windows/make_installer.ps1 -Version $env:VERSION
 
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v6
         with:
           name: windows-installer
           path: Vocalise-Rider-*-Windows-Setup.exe
 
   mac:
-    runs-on: macos-14
+    runs-on: macos-15
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
 
       - name: Get JUCE
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           repository: juce-framework/JUCE
           ref: ${{ env.JUCE_VERSION }}
@@ -81,7 +81,7 @@ jobs:
       - name: Make the installer
         run: bash Packaging/make_installer.sh "$VERSION"
 
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v6
         with:
           name: mac-installer
           path: Vocalise-Rider-*-Installer.dmg
@@ -91,12 +91,12 @@ jobs:
     needs: [ windows, mac ]
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/download-artifact@v4
+      - uses: actions/download-artifact@v7
         with:
           path: dist
           merge-multiple: true
       - name: Publish the Release
-        uses: softprops/action-gh-release@v2
+        uses: softprops/action-gh-release@v3
         with:
           files: dist/*
           generate_release_notes: true
