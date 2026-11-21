@@ -29,7 +29,7 @@ juce::AudioProcessorValueTreeState::ParameterLayout VocalRiderProcessor::createL
     l.add (std::make_unique<juce::AudioParameterBool> (juce::ParameterID { "protectS", 1 }, "Protect S sounds", true));
     l.add (std::make_unique<Param> (juce::ParameterID { "output", 1 }, "Output volume (dB)",
                                     Range (-24.0f, 12.0f, 0.1f), 0.0f));
-    // Waves-style ride workflow. In WRITE mode the plugin moves "Ride (dB)" by itself, so Logic's
+    // Ride-recording workflow. In WRITE mode the plugin moves "Ride (dB)" by itself, so Logic's
     // Latch/Touch/Write records it as automation. In READ mode the plugin applies whatever "Ride (dB)" says.
     l.add (std::make_unique<juce::AudioParameterChoice> (juce::ParameterID { "mode", 1 }, "Mode (Live/Write/Read)",
                                                          juce::StringArray { "Live", "Write", "Read" }, 0));

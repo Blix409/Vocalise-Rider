@@ -281,7 +281,7 @@ void VocalRiderEditor::HelpOverlay::Content::build (int width)
         "It shows the highest level of each block after the OUTPUT volume, with a small marker that holds the recent peak for about 1.5 seconds.");
 
     section ("LIVE / WRITE / READ (mode buttons)", kTarget,
-        "Lets you record the ride as Logic automation, like Waves Vocal Rider, then bounce it.",
+        "Lets you record the ride as Logic automation, then bounce it.",
         "LIVE: rides while playing, nothing is recorded. WRITE: set the Logic track to Latch or Touch, press play, and the ride is recorded to the \"Ride (dB)\" automation lane. READ: set the track to Read and the recorded ride is played back. You can then Command-select and edit it. To redo a ride, switch to WRITE and play over it.",
         "In WRITE the plugin moves the \"Ride (dB)\" parameter itself while the transport is running. In READ it ignores the audio and applies whatever that parameter says. The plugin reports 30 ms of delay, so keep Plug-in Delay Compensation on in Logic.");
 
@@ -507,7 +507,7 @@ void VocalRiderEditor::mouseUp (const juce::MouseEvent&)
     dragging = Line::none;
 }
 
-// ------------------------------------------------------------------ AUTO SET (like magic.RIDE's auto-target)
+// ------------------------------------------------------------------ AUTO SET
 void VocalRiderEditor::runAutoSet()
 {
     uint32_t h[RiderCore::kHistBins];

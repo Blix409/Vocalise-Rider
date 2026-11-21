@@ -69,7 +69,7 @@ Quick start: play the vocal for 10+ seconds, click **AUTO SET**, then fine-tune.
 - **How:** shows the highest level of each block after OUTPUT, with a marker that holds the recent peak for about 1.5 seconds.
 
 ## LIVE / WRITE / READ (modes)
-- **For:** record the ride as Logic automation, like Waves Vocal Rider, then bounce it.
+- **For:** record the ride as Logic automation, then bounce it.
 - **Use:** LIVE rides while playing and records nothing. WRITE: set the Logic track to Latch or Touch, press play, and the ride is recorded to the "Ride (dB)" lane. READ: set the track to Read and the recorded ride plays back; Command-select to edit. To redo a ride, switch to WRITE and play over it.
 - **How:** in WRITE the plugin moves "Ride (dB)" itself while the transport runs. In READ it ignores the audio and applies that parameter. The plugin reports 30 ms of delay, so keep Plug-in Delay Compensation on in Logic.
 
