@@ -63,6 +63,9 @@ jobs:
           ref: ${{ env.JUCE_VERSION }}
           path: JUCE
 
+      - name: Patch JUCE 7 for the macOS 15 SDK
+        run: python3 Packaging/patch_juce_macos15.py JUCE
+
       - name: Work out the version
         run: |
           if [[ "$GITHUB_REF" == refs/tags/v* ]]; then V="${GITHUB_REF_NAME#v}"; else V="1.0.0-dev${GITHUB_RUN_NUMBER}"; fi
