@@ -1,0 +1,102 @@
+# Builds Vocalise-Rider for Windows (VST3) and Mac (Audio Unit + VST3), makes the two installers,
+# and attaches them to a GitHub Release when you push a version tag such as v1.0.0.
+name: Build and release
+
+on:
+  push:
+    branches: [ main ]
+    tags: [ 'v*' ]
+  workflow_dispatch:          # lets you run it by hand from the Actions tab
+
+permissions:
+  contents: write             # needed to create the Release
+
+env:
+  JUCE_VERSION: 7.0.12
+
+jobs:
+  windows:
+    runs-on: windows-2022
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Get JUCE
+        uses: actions/checkout@v4
+        with:
+          repository: juce-framework/JUCE
+          ref: ${{ env.JUCE_VERSION }}
+          path: JUCE
+
+      - name: Work out the version
+        shell: bash
+        run: |
+          if [[ "$GITHUB_REF" == refs/tags/v* ]]; then V="${GITHUB_REF_NAME#v}"; else V="1.0.0-dev${GITHUB_RUN_NUMBER}"; fi
+          echo "VERSION=$V" >> "$GITHUB_ENV"
+
+      - name: Configure
+        run: cmake -B build -G "Visual Studio 17 2022" -A x64 -DJUCE_DIR="${{ github.workspace }}/JUCE"
+
+      - name: Build
+        run: cmake --build build --config Release
+
+      - name: Install Inno Setup
+        run: choco install innosetup -y --no-progress
+
+      - name: Make the installer
+        shell: pwsh
+        run: ./Packaging/windows/make_installer.ps1 -Version $env:VERSION
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: windows-installer
+          path: Vocalise-Rider-*-Windows-Setup.exe
+
+  mac:
+    runs-on: macos-14
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Get JUCE
+        uses: actions/checkout@v4
+        with:
+          repository: juce-framework/JUCE
+          ref: ${{ env.JUCE_VERSION }}
+          path: JUCE
+
+      - name: Work out the version
+        run: |
+          if [[ "$GITHUB_REF" == refs/tags/v* ]]; then V="${GITHUB_REF_NAME#v}"; else V="1.0.0-dev${GITHUB_RUN_NUMBER}"; fi
+          echo "VERSION=$V" >> "$GITHUB_ENV"
+
+      - name: Configure (Intel + Apple Silicon)
+        run: >
+          cmake -B build -G Xcode
+          -DJUCE_DIR="${{ github.workspace }}/JUCE"
+          -DCMAKE_OSX_ARCHITECTURES="x86_64;arm64"
+          -DCMAKE_OSX_DEPLOYMENT_TARGET=10.13
+
+      - name: Build
+        run: cmake --build build --config Release
+
+      - name: Make the installer
+        run: bash Packaging/make_installer.sh "$VERSION"
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: mac-installer
+          path: Vocalise-Rider-*-Installer.dmg
+
+  release:
+    if: startsWith(github.ref, 'refs/tags/v')
+    needs: [ windows, mac ]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          path: dist
+          merge-multiple: true
+      - name: Publish the Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: dist/*
+          generate_release_notes: true

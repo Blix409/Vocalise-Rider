@@ -1,0 +1,81 @@
+# Vocalise-Rider: how to use it
+
+Vocalise-Rider listens to your vocal and moves the volume for you. It only changes volume, never tone.
+Quick start: play the vocal for 10+ seconds, click **AUTO SET**, then fine-tune. Click the **?** in the plugin for this guide.
+
+## The graph (Original and After riding)
+- **For:** shows loudness over the last 10 seconds. Grey is the original, green is after riding.
+- **Use:** play the vocal, then drag the lines and turn the knobs. The green changes right away (even with Logic stopped). You want the green flatter than the grey.
+- **How:** every 10 ms the plugin measures loudness and works out the volume change your settings would make.
+
+## LOUD line (purple)
+- **For:** how loud the loud parts may get.
+- **Use:** drag it down to pull loud parts down harder, up to leave them alone.
+- **How:** anything louder than the line is turned down toward it (at most 18 dB).
+
+## QUIET line (blue)
+- **For:** how quiet the quiet parts may get.
+- **Use:** drag it up to lift quiet parts more, down to leave them alone.
+- **How:** anything quieter than the line is turned up toward it (at most 12 dB). Silence is never lifted.
+
+## TARGET line (teal, dashed)
+- **For:** the loudness you aim for. The loud and quiet lines sit above and below it.
+- **Use:** drag it up or down. Grabbing it turns AUTO TARGET off.
+- **How:** the plugin pulls the vocal toward it as much as LEVELING allows. Moving it moves both other lines.
+
+## AUTO TARGET (switch)
+- **For:** lets the plugin find the target itself.
+- **Use:** leave on for a steady vocal. Turn off, or grab the teal line, for a fixed number.
+- **How:** it follows the singer's average loudness slowly (about a 10 second memory).
+
+## AUTO SET (button)
+- **For:** sets target, both lines and silence level in one click.
+- **Use:** play at least 10 seconds (a verse and chorus is better), click it, then adjust by hand.
+- **How:** it builds a picture of every loudness it heard: target at the typical singing level, lines at the loud and quiet extremes, silence just above the noise between phrases. Then it listens fresh.
+
+## LEVELING (slider, 0 to 10)
+- **For:** how strongly the vocal is evened out. 0 does nothing extra, 10 is fully working.
+- **Use:** raise for a more even vocal, lower to keep natural ups and downs. 4 to 6 is a good start.
+- **How:** at 0 only the LOUD and QUIET lines act. Higher values also pull in-between parts toward the target. At 10 everything goes to the target.
+
+## SILENCE (slider)
+- **For:** tells the plugin where singing stops and noise or breath begins.
+- **Use:** set just above the quiet noise between phrases (AUTO SET does it). The dotted line on the graph shows it.
+- **How:** anything below it counts as silence and is not lifted, so noise and breaths are not pumped up.
+
+## SPEED (knob, 0 to 10)
+- **For:** how fast it reacts. Low is slow and smooth, high is quick and tight.
+- **Use:** slow sounds natural and hides the riding, fast catches short peaks. The text under the knob shows the real times.
+- **How:** loud parts come down at the fast time (about 160 ms at 0, 16 ms at 10). Quiet parts come back up six times slower.
+
+## SMART SILENCE (switch)
+- **For:** stops a boost from staying on when the singer stops.
+- **Use:** leave on. Turn off only if the ends of words get cut short.
+- **How:** below the SILENCE level, any boost slowly relaxes to no change, so the next phrase starts clean.
+
+## PROTECT S SOUNDS (switch)
+- **For:** keeps S, T and breath sounds from steering the ride.
+- **Use:** leave on for most vocals.
+- **How:** frames that are mostly high-pitched hiss (above about 5 kHz) are held and do not move the ride.
+
+## OUTPUT (slider)
+- **For:** main volume of the plugin, -24 to +12 dB.
+- **Use:** set the level leaving the plugin while watching the PEAK meter.
+- **How:** a plain smooth volume after the ride.
+
+## PEAK meter
+- **For:** shows the output level, left and right, so you can see if you are peaking.
+- **Use:** keep peaks out of the red. The CLIP light stays on if the signal hit the top. Click the meter to reset.
+- **How:** shows the highest level of each block after OUTPUT, with a marker that holds the recent peak for about 1.5 seconds.
+
+## LIVE / WRITE / READ (modes)
+- **For:** record the ride as Logic automation, like Waves Vocal Rider, then bounce it.
+- **Use:** LIVE rides while playing and records nothing. WRITE: set the Logic track to Latch or Touch, press play, and the ride is recorded to the "Ride (dB)" lane. READ: set the track to Read and the recorded ride plays back; Command-select to edit. To redo a ride, switch to WRITE and play over it.
+- **How:** in WRITE the plugin moves "Ride (dB)" itself while the transport runs. In READ it ignores the audio and applies that parameter. The plugin reports 30 ms of delay, so keep Plug-in Delay Compensation on in Logic.
+
+## ORIGINAL vs AFTER RIDING numbers
+- **For:** shows in numbers how much more even the vocal became.
+- **Use:** look at the gap. A smaller gap after riding means a more even vocal.
+- **How:** LOUD is the level the louder parts reach, QUIET the quieter parts, GAP the distance between. Silence is left out.
+
+Every control can also be automated from Logic's automation menu. Tip: bounce in place when you are happy.

@@ -1,0 +1,28 @@
+VOCALISE-RIDER: INSTALL HELP (WINDOWS)
+
+NORMAL INSTALL
+  1. Double-click "Vocalise-Rider-...-Windows-Setup.exe" and follow the steps (about 1 minute).
+  2. Restart your DAW. If it doesn't list the plugin, rescan plugins in the DAW's plugin manager.
+     The plugin is called Vocalise-Rider (Daemonj Multimedia) and is a VST3.
+
+IF WINDOWS SAYS "WINDOWS PROTECTED YOUR PC" (SmartScreen)
+  This free plugin isn't signed with a paid certificate, so Windows asks you to confirm it once.
+  Click "More info", then "Run anyway".
+  If the file was blocked after downloading, right-click it, choose Properties, tick "Unblock" at the bottom,
+  click OK, then run it again. Or paste this in PowerShell (change the path to where the file is):
+
+     Unblock-File "$HOME\Downloads\Vocalise-Rider-...-Windows-Setup.exe"
+
+  This only affects the Vocalise-Rider installer. It does not turn off any Windows security setting.
+
+INSTALL BY HAND (without the installer)
+  Copy the folder "Vocalise-Rider.vst3" into:  C:\Program Files\Common Files\VST3
+  (the whole folder, not just the file inside it). Then rescan plugins in your DAW.
+
+IF YOUR DAW DOESN'T SHOW THE PLUGIN
+  - Check that the folder is at C:\Program Files\Common Files\VST3\Vocalise-Rider.vst3
+  - Make sure the DAW is 64-bit and scans that folder (Reaper: Options > Preferences > Plug-ins > VST).
+  - Restart the DAW and rescan.
+
+HOW TO REMOVE IT
+  Settings > Apps > Installed apps > Vocalise-Rider > Uninstall.

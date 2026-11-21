@@ -1,0 +1,33 @@
+VOCALISE-RIDER: INSTALL HELP
+
+NORMAL INSTALL
+  1. Open the disk image and double-click "Install Vocalise-Rider.pkg".
+  2. Follow the steps. Click Customize to choose which formats to install. Enter your Mac password.
+  3. Restart Logic Pro. Find it at: Audio FX > Audio Units > Daemonj Multimedia > Vocalise-Rider.
+
+IF macOS SAYS THE INSTALLER "CAN'T BE OPENED" OR "IS FROM AN UNIDENTIFIED DEVELOPER"
+  This free plugin isn't signed with a paid Apple certificate, so macOS asks you to approve it once.
+  Easiest fix: right-click "Install Vocalise-Rider.pkg", choose Open, then click Open.
+  Or double-click "Fix Blocked Installer.command" in the disk image (right-click > Open the first time).
+  Or paste this in Terminal (Applications > Utilities), changing the path if needed:
+
+     xattr -cr "/Volumes/Vocalise-Rider/Install Vocalise-Rider.pkg"
+
+IF YOUR DAW DOESN'T SHOW THE PLUGIN
+  Run this in Terminal, then restart the DAW:
+
+     sudo xattr -cr /Library/Audio/Plug-Ins/Components/Vocalise-Rider.component
+     killall -9 AudioComponentRegistrar
+
+  (The installer already does the first line for you.) For VST3, replace the path with
+  /Library/Audio/Plug-Ins/VST3/Vocalise-Rider.vst3.
+
+  On Apple Silicon Macs you can also give the plugin a local signature:
+
+     sudo codesign --force --deep --sign - /Library/Audio/Plug-Ins/Components/Vocalise-Rider.component
+
+  These commands only affect the Vocalise-Rider plugin. They do not turn off any Mac security setting.
+
+HOW TO REMOVE IT
+  Double-click "Uninstall Vocalise-Rider.command" (in the Documents folder), or delete
+  Vocalise-Rider.component from /Library/Audio/Plug-Ins/Components.

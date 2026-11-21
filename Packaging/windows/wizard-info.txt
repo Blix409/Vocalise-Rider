@@ -1,0 +1,6 @@
+Vocalise-Rider (Daemonj Multimedia) is a free automatic vocal level rider, installed as a 64-bit VST3 plugin.
+
+- Close your DAW before installing, and restart it afterwards.
+- The plugin is installed to C:\Program Files\Common Files\VST3 (administrator permission is needed).
+- The guides (README, install help, how to use) are always installed with it.
+- In the plugin, click the "?" icon for a guide to every control.

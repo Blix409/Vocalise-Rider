@@ -1,0 +1,5 @@
+build/
+*.dmg
+*.pkg
+Vocalise-Rider-*-Windows-Setup.exe
+.DS_Store
