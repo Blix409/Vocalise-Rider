@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.22)
 
-project(VocalRider VERSION 1.0.0)
+project(VocalRider VERSION 1.1.0)
 
 # Where JUCE lives. Default: a folder called JUCE in your home folder (~/JUCE, or C:/Users/<you>/JUCE on Windows).
 if(DEFINED ENV{HOME})
