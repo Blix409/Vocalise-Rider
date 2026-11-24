@@ -2,11 +2,11 @@
 #include <juce_audio_processors/juce_audio_processors.h>
 #include "RiderCore.h"
 
-class VocalRiderProcessor : public juce::AudioProcessor
+class VocalRiderProcessor : public juce::AudioProcessor, private juce::AsyncUpdater
 {
 public:
     VocalRiderProcessor();
-    ~VocalRiderProcessor() override = default;
+    ~VocalRiderProcessor() override { cancelPendingUpdate(); }
 
     void prepareToPlay (double sampleRate, int samplesPerBlock) override;
     void releaseResources() override { endRideWrite(); }
@@ -31,6 +31,7 @@ public:
     void setStateInformation (const void*, int) override;
 
     juce::AudioProcessorValueTreeState apvts;
+    static constexpr int kLookaheadChoicesMs[6] = { 0, 10, 20, 30, 50, 80 };
     RiderCore& getCoreForEditor() { return core; }
     const RiderCore& getCore() const { return core; }
 
@@ -41,6 +42,7 @@ private:
     static juce::AudioProcessorValueTreeState::ParameterLayout createLayout();
     RiderParams readParams() const;
     void endRideWrite();
+    void handleAsyncUpdate() override { setLatencySamples (core.getLatencySamples()); }
 
     RiderCore core;
     juce::SmoothedValue<float, juce::ValueSmoothingTypes::Linear> outGain;
@@ -58,6 +60,7 @@ private:
     std::atomic<float>* pOutput = nullptr;
     std::atomic<float>* pMode = nullptr;        // 0 = Live, 1 = Write, 2 = Read
     std::atomic<float>* pRideOut = nullptr;
+    std::atomic<float>* pLookahead = nullptr;   // index into kLookaheadChoicesMs
     juce::AudioParameterFloat* rideParam = nullptr;
     bool writeGestureOpen = false;
     float lastWritten = 1000.0f;

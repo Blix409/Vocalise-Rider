@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Vocalise-Rider Guide</title>
+<style>
+:root{--bg:#181818;--panel:#212121;--panel2:#272727;--line:#313131;--text:#e0e0e0;--muted:#9a9a9a;--green:#4caf50;--teal:#80deea;--purple:#ce93d8;--blue:#90caf9;--amber:#ffb454}
+*{box-sizing:border-box}html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--text);font:16px/1.65 "Futura","Century Gothic","Jost","Avenir Next","Segoe UI",system-ui,sans-serif}
+a{color:var(--teal)}
+header{padding:44px 24px 30px;text-align:center;border-bottom:1px solid var(--line);background:linear-gradient(#1e1e1e,#181818)}
+header img{width:84px;height:84px}
+header h1{margin:12px 0 4px;font-size:34px;letter-spacing:.06em}
+header h1 span{color:var(--green)}
+header p{margin:0;color:var(--muted)}
+nav{position:sticky;top:0;z-index:5;background:#1b1b1bf2;border-bottom:1px solid var(--line);padding:10px 16px;display:flex;flex-wrap:wrap;gap:6px 18px;justify-content:center;font-size:14px}
+nav a{text-decoration:none;color:var(--muted)}nav a:hover{color:var(--green)}
+main{max-width:980px;margin:0 auto;padding:10px 22px 70px}
+h2{font-size:26px;margin:54px 0 8px;letter-spacing:.03em;display:flex;align-items:center;gap:12px}
+h2:before{content:"";width:6px;height:26px;background:var(--green);border-radius:3px}
+h3{margin:0 0 6px;font-size:19px}
+p{margin:.5em 0}
+.lead{color:var(--muted);margin-top:0}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:18px 20px}
+.steps{counter-reset:s;display:grid;gap:12px;padding:0;list-style:none}
+.steps li{counter-increment:s;background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:14px 18px 14px 62px;position:relative}
+.steps li:before{content:counter(s);position:absolute;left:16px;top:12px;width:32px;height:32px;border-radius:50%;background:var(--green);color:#101010;font-weight:700;display:grid;place-items:center}
+.shot{position:relative;margin:18px auto;max-width:880px}
+.shot img{width:100%;display:block;border-radius:12px;border:1px solid var(--line)}
+.mk{position:absolute;transform:translate(-50%,-50%);width:24px;height:24px;border-radius:50%;background:var(--green);color:#101010;font:700 12px/24px sans-serif;text-align:center;box-shadow:0 0 0 2px #101010}
+.legend{columns:2;column-gap:28px;margin:6px 0 0;padding:0;list-style:none;font-size:15px}
+.legend li{break-inside:avoid;margin:3px 0}
+.legend b{display:inline-block;min-width:26px;color:var(--green)}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(420px,1fr));gap:16px}
+.ctl{background:var(--panel);border:1px solid var(--line);border-left:5px solid var(--green);border-radius:12px;padding:16px 18px}
+.ctl h3 .n{display:inline-block;min-width:26px;height:26px;border-radius:50%;background:var(--green);color:#101010;font:700 13px/26px sans-serif;text-align:center;margin-right:8px}
+.ctl dl{margin:8px 0 0}.ctl dt{font-weight:700;font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-top:10px}
+.ctl dd{margin:2px 0 0}
+.purple{border-left-color:var(--purple)}.purple .n{background:var(--purple)!important}
+.blue{border-left-color:var(--blue)}.blue .n{background:var(--blue)!important}
+.teal{border-left-color:var(--teal)}.teal .n{background:var(--teal)!important}
+.amber{border-left-color:var(--amber)}.amber .n{background:var(--amber)!important}
+.grey{border-left-color:#8a8a8a}.grey .n{background:#8a8a8a!important}
+.callout{border:1px solid #2f4f31;background:#1d2a1e;border-radius:12px;padding:14px 18px;margin:16px 0}
+.warn{border-color:#5a4a26;background:#2a2417}
+table{border-collapse:collapse;width:100%;margin:10px 0}
+td,th{padding:8px 12px;border-bottom:1px solid var(--line);text-align:left}
+th{color:var(--muted);font-size:13px;letter-spacing:.08em;text-transform:uppercase}
+.g{color:var(--green)}.p{color:var(--purple)}.b{color:var(--blue)}.m{color:#8a8a8a}
+kbd{background:var(--panel2);border:1px solid var(--line);border-radius:5px;padding:1px 7px;font-size:.9em}
+details{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:10px 16px;margin:8px 0}
+summary{cursor:pointer;font-weight:700}
+footer{border-top:1px solid var(--line);padding:26px;text-align:center;color:var(--muted);font-size:14px}
+svg text{font-family:inherit}
+@media(max-width:700px){.grid{grid-template-columns:1fr}.legend{columns:1}}
+@media print{body{background:#fff;color:#222}header,nav{background:#fff}.card,.ctl,.steps li,details{background:#fff;border-color:#ccc}nav{display:none}.callout{background:#f3f8f3}}
+</style></head><body>
+<header><img src="{{LOGO}}" alt="Vocalise logo"><h1>VOCALISE<span> | </span>RIDER</h1>
+<p>Guide &middot; version {{VERSION}} &middot; the automatic vocal level rider</p></header>
+<nav><a href="#quick">Quick start</a><a href="#screen">The screen</a><a href="#lines">Tame Peaks &amp; Lower Levels</a><a href="#controls">Every control</a><a href="#record">Recording a ride</a><a href="#advanced">Advanced (cog)</a><a href="#tips">Tips &amp; fixes</a><a href="#about">About</a></nav>
+<main>
+
+<h2 id="quick">Quick start</h2>
+<p class="lead">Vocalise-Rider listens to a vocal and moves the volume up and down for you, like an engineer riding a fader. It only changes the <b>volume</b>, never the tone, so the vocal stays clean.</p>
+<ol class="steps">
+<li><b>Put it on the vocal track</b> as an effect (the first slot is best, before compression).</li>
+<li><b>Play the vocal</b> for 10 seconds or more. The graph fills in: grey is the original, green is the result.</li>
+<li><b>Drag the purple and blue lines</b> in the graph. Purple stops loud parts sticking out, blue lifts quiet parts. The green line should look flatter than the grey one.</li>
+<li><b>Leave OUTPUT at 0.0 dB.</b> That is unity, meaning no extra volume change. Done.</li>
+</ol>
+<div class="callout"><b>Want it hands-off?</b> Open the cog (top right) and press <b>AUTO SET</b> after playing the vocal. It picks the target, both lines and the silence level for you.</div>
+
+<h2 id="screen">The screen</h2>
+<p class="lead">Every control is numbered below. The same numbers are used in the cards that follow. Inside the plugin, press <b>?</b> to see this as an overlay on the real controls.</p>
+<div class="shot"><img src="{{SCREENSHOT}}" alt="Vocalise-Rider screen">
+<span class="mk" style="left:6.2%;top:32.4%">1</span><span class="mk" style="left:6.2%;top:41.3%">2</span>
+<span class="mk" style="left:76%;top:32.2%">3</span><span class="mk" style="left:76%;top:45.5%">4</span>
+<span class="mk" style="left:50%;top:21%">5</span><span class="mk" style="left:3.3%;top:63%">6</span>
+<span class="mk" style="left:84.2%;top:17%">7</span><span class="mk" style="left:97.6%;top:20%">8</span>
+<span class="mk" style="left:3.8%;top:72.5%">9</span><span class="mk" style="left:18%;top:72.5%">10</span><span class="mk" style="left:32.2%;top:72.5%">11</span>
+<span class="mk" style="left:46.5%;top:72.5%">12</span><span class="mk" style="left:65.5%;top:75%">13</span>
+<span class="mk" style="left:24%;top:4%">14</span><span class="mk" style="left:86.5%;top:7.4%">15</span><span class="mk" style="left:91%;top:7.4%">16</span><span class="mk" style="left:95.8%;top:7.4%">17</span></div>
+<ul class="legend">
+<li><b>1</b>Tame Peaks line</li><li><b>2</b>Lower Levels line</li><li><b>3</b>Target line</li><li><b>4</b>Silence line</li>
+<li><b>5</b>The graph</li><li><b>6</b>The numbers table</li><li><b>7</b>Output fader</li><li><b>8</b>Peak meters</li>
+<li><b>9</b>Speed knob</li><li><b>10</b>Target knob</li><li><b>11</b>Silence knob</li><li><b>12</b>Live / Write / Read</li>
+<li><b>13</b>The three switches</li><li><b>14</b>Logo: About</li><li><b>15</b>?: help overlay</li><li><b>16</b>i: this guide</li><li><b>17</b>Cog: advanced</li></ul>
+
+<h2 id="lines">Tame Peaks and Lower Levels, explained</h2>
+<p class="lead">These are the two lines people ask about most. The dB numbers on them are <b>distances from the Target line</b>, not volume levels.</p>
+<div class="card">{{DIAGRAM}}
+<p><b class="p">TAME PEAKS +4.0 dB</b> means: the ceiling sits <b>4 dB louder</b> than the Target. Anything that rises above this line is pulled back down to it. A <b>smaller</b> number brings the ceiling closer to the Target, which tames more.</p>
+<p><b class="b">LOWER LEVELS &minus;7.0 dB</b> means: the floor sits <b>7 dB quieter</b> than the Target. Anything that falls below this line is lifted up to it. A <b>smaller</b> number brings the floor closer to the Target, which lifts more.</p>
+<p>Example: Target &minus;30 dB, Tame Peaks +4, Lower Levels &minus;7. The ceiling is at &minus;26 dB and the floor at &minus;37 dB. A word at &minus;22 dB is pulled down to &minus;26. A word at &minus;42 dB is lifted to &minus;37. Words between the lines are left alone, unless you raise <b>Leveling</b> in the cog, which also pulls them toward the Target.</p></div>
+<h3 style="margin-top:22px">The numbers table</h3>
+<div class="card"><table><tr><th></th><th class="m">Original</th><th class="g">After riding</th></tr>
+<tr><td class="p"><b>LOUD PEAKS</b></td><td>&minus;20.6 dB</td><td>&minus;27.0 dB</td></tr>
+<tr><td class="b"><b>QUIET PARTS</b></td><td>&minus;39.3 dB</td><td>&minus;41.3 dB</td></tr>
+<tr><td><b>GAP (LOUD &minus; QUIET)</b></td><td>18.6 dB</td><td class="g">14.3 dB</td></tr></table>
+<p>These <b>are</b> real volume levels in dB. LOUD PEAKS is how loud the louder parts of the singing typically are, QUIET PARTS is how loud the quieter parts are, and GAP is the distance between them. In this example the gap shrank from 18.6 to 14.3 dB, so the vocal is more even. <b>Smaller gap after = better.</b> Silence between phrases is not counted.</p></div>
+
+<h2 id="controls">Every control</h2>
+<p class="lead">For each one: what it is for, how to use it, and how it works.</p>
+<div class="grid">
+
+<div class="ctl purple"><h3><span class="n">1</span>Tame Peaks line</h3><dl>
+<dt>What it is for</dt><dd>Stops the loudest parts from sticking out.</dd>
+<dt>How to use it</dt><dd>Drag the purple line down to tame more, up to leave loud parts alone.</dd>
+<dt>How it works</dt><dd>Anything louder than this line is turned down until it sits on the line. The most it will ever turn down is 18 dB.</dd></dl></div>
+
+<div class="ctl blue"><h3><span class="n">2</span>Lower Levels line</h3><dl>
+<dt>What it is for</dt><dd>Brings up words and phrases that are too quiet.</dd>
+<dt>How to use it</dt><dd>Drag the blue line up to lift more, down to leave quiet parts alone.</dd>
+<dt>How it works</dt><dd>Anything quieter than this line is turned up until it sits on the line, by at most 12 dB. Silence is never lifted (see Silence).</dd></dl></div>
+
+<div class="ctl teal"><h3><span class="n">3</span>Target line and Target knob</h3><dl>
+<dt>What it is for</dt><dd>The loudness you are aiming for. It is the centre of the ride.</dd>
+<dt>How to use it</dt><dd>Drag the teal line or turn the Target knob (10). They are the same control. Touching it switches Smart Target off so it stays where you put it. The &minus; and + nudge it by 0.5 dB.</dd>
+<dt>How it works</dt><dd>The vocal is pulled toward this level (as strongly as Leveling allows), and the Tame Peaks and Lower Levels lines move with it.</dd></dl></div>
+
+<div class="ctl grey"><h3><span class="n">4</span>Silence line and Silence knob</h3><dl>
+<dt>What it is for</dt><dd>Tells the plugin where singing stops and breath or room noise begins.</dd>
+<dt>How to use it</dt><dd>Set it just above the quiet noise between phrases. Drag the grey line or turn the Silence knob (11).</dd>
+<dt>How it works</dt><dd>Anything under this level counts as silence and is never boosted, so the noise floor and breaths are not pumped up.</dd></dl></div>
+
+<div class="ctl"><h3><span class="n">5</span>The graph</h3><dl>
+<dt>What it is for</dt><dd>Shows the last 10 seconds of the vocal so you can see what the ride does.</dd>
+<dt>How to use it</dt><dd>Play the vocal, then move lines and knobs. The green trace changes instantly, even when your DAW is stopped. Aim for green flatter than grey.</dd>
+<dt>How it works</dt><dd>Every 10 ms the plugin measures loudness. The green trace is the original plus the volume change your current settings would make.</dd></dl></div>
+
+<div class="ctl"><h3><span class="n">6</span>The numbers table</h3><dl>
+<dt>What it is for</dt><dd>Tells you in numbers how much more even the vocal became.</dd>
+<dt>How to use it</dt><dd>Compare the grey (before) and green (after) columns. Watch the GAP row: smaller is more even.</dd>
+<dt>How it works</dt><dd>It uses the 90th percentile of the singing for LOUD PEAKS and the 10th percentile for QUIET PARTS, which ignores one-off spikes and dropouts.</dd></dl></div>
+
+<div class="ctl amber"><h3><span class="n">7</span>Output fader</h3><dl>
+<dt>What it is for</dt><dd>A plain volume control after the ride, from &minus;24 to +12 dB.</dd>
+<dt>How to use it</dt><dd>Leave it at <b>0.0 dB (unity)</b> in normal use. It is there to turn the result down if needed. Raising it is allowed, but the goal is unity. Double-click to reset.</dd>
+<dt>How it works</dt><dd>Simple gain applied last, smoothed so moving it never clicks. The small line beside the fader marks 0 dB.</dd></dl></div>
+
+<div class="ctl amber"><h3><span class="n">8</span>Peak meters</h3><dl>
+<dt>What it is for</dt><dd>Shows how loud the plugin's output gets, left and right.</dd>
+<dt>How to use it</dt><dd>Keep the peaks out of the red. The red light at the top stays lit if the signal hit the maximum. Click the meter to clear it.</dd>
+<dt>How it works</dt><dd>Shows the highest level of each moment after the Output fader. The grey marker holds the recent peak for about 1.5 seconds, and the number below is the held peak.</dd></dl></div>
+
+<div class="ctl"><h3><span class="n">9</span>Speed knob</h3><dl>
+<dt>What it is for</dt><dd>How fast the plugin reacts. Low is slow and smooth, high is quick and tight.</dd>
+<dt>How to use it</dt><dd>Slow settings hide the riding. Fast settings catch short peaks but sound more worked. Hover the knob to see the real times.</dd>
+<dt>How it works</dt><dd>One knob sets two times. Loud parts come down in about 160 ms at 0 down to 16 ms at 10. Quiet parts come back up six times slower, which is gentler on the ear.</dd></dl></div>
+
+<div class="ctl teal"><h3><span class="n">10</span>Target knob</h3><dl>
+<dt>What it is for</dt><dd>The same control as the teal line (3), as a knob.</dd>
+<dt>How to use it</dt><dd>Turn it, click the number to type a value, or use &minus; / +. With Smart Target on it shows the level being followed.</dd>
+<dt>How it works</dt><dd>See the Target line.</dd></dl></div>
+
+<div class="ctl grey"><h3><span class="n">11</span>Silence knob</h3><dl>
+<dt>What it is for</dt><dd>The same control as the grey line (4), as a knob.</dd>
+<dt>How to use it</dt><dd>Turn it, click the number to type a value, or use &minus; / +.</dd>
+<dt>How it works</dt><dd>See the Silence line.</dd></dl></div>
+
+<div class="ctl purple"><h3><span class="n">12</span>LIVE MODE / WRITE / READ</h3><dl>
+<dt>What it is for</dt><dd>Lets you record the ride as automation, then edit it and bounce.</dd>
+<dt>How to use it</dt><dd><b>LIVE</b>: rides while you play, nothing is recorded. <b>WRITE</b>: record the ride (see Recording a ride). <b>READ</b>: plays back the recorded ride.</dd>
+<dt>How it works</dt><dd>In WRITE the plugin moves an automation parameter called <i>Ride (dB)</i>. In READ it ignores the audio and applies whatever that parameter says.</dd></dl></div>
+
+<div class="ctl"><h3><span class="n">13</span>Smart Target, Smart Silence, Protect "S" Sounds</h3><dl>
+<dt>Smart Target</dt><dd>ON: the plugin finds the target itself by following the singer's average loudness (about a 10 second memory). OFF: you set the Target.</dd>
+<dt>Smart Silence</dt><dd>ON: when the singer stops, any boost eases back to 0 so the next phrase starts clean and noise is not turned up. Turn it off only if word endings sound cut short.</dd>
+<dt>Protect "S" Sounds</dt><dd>ON: hissy S, T and breath sounds (mostly above 5 kHz) do not steer the ride, so a harsh S is not pulled down and the next word is not lifted because of it.</dd></dl></div>
+
+<div class="ctl grey"><h3><span class="n">14</span>Logo: About</h3><dl><dt>What it is for</dt><dd>Click the logo to see the version and who made the plugin.</dd></dl></div>
+<div class="ctl grey"><h3><span class="n">15</span>? Help overlay</h3><dl><dt>What it is for</dt><dd>Dims the screen and outlines each control with a short explanation. Three pages: the lines, the graph and meters, the controls.</dd></dl></div>
+<div class="ctl grey"><h3><span class="n">16</span>i This guide</h3><dl><dt>What it is for</dt><dd>Opens this page in your web browser. You can print it to PDF from the browser.</dd></dl></div>
+<div class="ctl grey"><h3><span class="n">17</span>Cog: Advanced</h3><dl><dt>What it is for</dt><dd>Lookahead, Leveling and AUTO SET. See Advanced below.</dd></dl></div>
+</div>
+
+<h2 id="record">Recording a ride (Logic Pro)</h2>
+<p class="lead">This replaces writing a ride, selecting it into volume automation and bouncing.</p>
+<ol class="steps">
+<li>Insert Vocalise-Rider on the vocal track. Set the mode to <b>WRITE</b>.</li>
+<li>On the track, show automation and set the mode to <b>Latch</b> (or Touch). Choose the <b>Ride (dB)</b> parameter.</li>
+<li>Press play. The plugin rides the vocal and writes the ride into the automation lane.</li>
+<li>Switch the plugin to <b>READ</b> and the track to <b>Read</b>. The recorded ride plays back. Select and edit the points like any volume automation.</li>
+<li>Bounce in place when you are happy so the ride is baked into the audio.</li>
+</ol>
+<div class="callout warn"><b>Keep Plug-in Delay Compensation on.</b> The plugin looks ahead (30 ms by default) and tells your DAW about that delay.</div>
+
+<h2 id="advanced">Advanced (the cog)</h2>
+<div class="grid">
+<div class="ctl"><h3>Lookahead</h3><dl><dt>What it is for</dt><dd>Puts the ride in place before the word arrives.</dd><dt>How to use it</dt><dd>30 ms suits most vocals. Longer is smoother on fast words. Off reacts after the fact. Choices: Off, 10, 20, 30, 50, 80 ms.</dd><dt>How it works</dt><dd>The audio is delayed by this amount while the level is measured on the undelayed signal. The delay is reported to your DAW as latency.</dd></dl></div>
+<div class="ctl"><h3>Leveling (0 to 10)</h3><dl><dt>What it is for</dt><dd>How strongly everything is pulled toward the Target, not just the extremes.</dd><dt>How to use it</dt><dd>0 means only the two lines act. 10 means the whole vocal is pulled to the Target. 4 to 6 is a good start.</dd><dt>How it works</dt><dd>Each moment is moved part of the way to the Target, then limited by the two lines.</dd></dl></div>
+<div class="ctl"><h3>AUTO SET</h3><dl><dt>What it is for</dt><dd>Sets Target, both lines and Silence in one click.</dd><dt>How to use it</dt><dd>Play at least 10 seconds of the vocal (a verse and chorus is better), then press AUTO SET.</dd><dt>How it works</dt><dd>It builds a picture of every loudness it heard. Target goes at the typical singing level, the lines at the loud and quiet extremes, and Silence just above the noise between phrases.</dd></dl></div>
+</div>
+
+<h2 id="tips">Tips and fixes</h2>
+<details><summary>The graph is empty</summary><p>Play the vocal. The graph shows the last 10 seconds that passed through the plugin.</p></details>
+<details><summary>It sounds pumpy or obvious</summary><p>Lower Speed, lower Leveling, and move the purple and blue lines further from the Target.</p></details>
+<details><summary>Breaths or room noise get louder</summary><p>Raise Silence so it sits just above the noise, and keep Smart Silence on.</p></details>
+<details><summary>S sounds get harsh or ducked</summary><p>Keep Protect "S" Sounds on. If a de-esser is on the track, put it after the rider.</p></details>
+<details><summary>My vocal is late against other tracks</summary><p>Turn on Plug-in Delay Compensation in your DAW, or set Lookahead to Off.</p></details>
+<details><summary>Where do the installers put things?</summary><p>See INSTALL in the Documents folder. Mac: Audio Unit and VST3 in the standard plugin folders. Windows: VST3 in Common Files.</p></details>
+
+<h2 id="about">About</h2>
+<div class="card"><p><b>Vocalise-Rider {{VERSION}}</b>, a free plugin.</p>
+<p>Made by Claude and Daemonj Multimedia. The code was written with Claude, an AI assistant made by Anthropic. Built with the JUCE audio framework (juce.com).</p></div>
+</main>
+<footer>Vocalise-Rider &middot; Daemonj Multimedia</footer>
+</body></html>

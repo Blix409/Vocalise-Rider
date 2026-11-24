@@ -22,7 +22,7 @@ After building: cd ~/Plugins/VocalRider && bash Packaging/make_installer.sh
 Creates Vocalise-Rider-1.0.0-Installer.dmg containing:
   - Install Vocalise-Rider.pkg  (a normal Mac installer with a Customize step: Audio Unit and VST3; the Documents are always installed). It clears the quarantine flag and signs the plugin locally after installing.
   - Fix Blocked Installer.command  (for when macOS blocks the unsigned installer)
-  - Documents folder  (README.md, INSTALL.txt, HOW-TO-USE.md, Uninstall script)
+  - Documents folder  (README.md, INSTALL.txt, HOW-TO-USE.md, "Vocalise-Rider Guide.html", Uninstall script)
 
 WINDOWS (VST3)
 Needs: Visual Studio 2022 Community ("Desktop development with C++"), CMake, Git, JUCE 7.0.12 in %USERPROFILE%\JUCE,

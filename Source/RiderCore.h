@@ -40,7 +40,8 @@ inline void speedToMs (float speed, float& attackMs, float& releaseMs)
 class RiderCore
 {
 public:
-    static constexpr double kLookaheadSeconds = 0.030;
+    static constexpr double kLookaheadSeconds = 0.030;      // default
+    static constexpr double kMaxLookaheadSeconds = 0.100;
     static constexpr double kHopSeconds       = 0.010;
     static constexpr int    kLookaheadFrames  = 3;
     static constexpr int    kWindowFrames     = 8;       // 8 x 10 ms = 80 ms measurement window
@@ -103,9 +104,10 @@ public:
         const bool rateChanged = std::abs (sampleRate - sr) > 0.5;
         sr = sampleRate;
         hop = std::max (1, (int) std::lround (kHopSeconds * sr));
-        lookahead = std::max (1, (int) std::lround (kLookaheadSeconds * sr));
+        lookahead = std::max (1, (int) std::lround (lookaheadMs * 0.001 * sr));
         smoothCoef = (float) (1.0 - std::exp (-1.0 / (kGainSmoothSeconds * sr)));
-        for (auto& d : delay) d.assign ((size_t) lookahead, 0.0f);
+        const size_t maxDelay = (size_t) std::lround (kMaxLookaheadSeconds * sr) + 2;   // sized once, so changing lookahead never allocates
+        for (auto& d : delay) d.assign (maxDelay, 0.0f);
         makeFilters();
         resetDsp();
         if (rateChanged || ! analysisInitialised) clearAnalysis();
@@ -135,6 +137,17 @@ public:
     }
 
     int getLatencySamples() const { return lookahead; }
+    int getLookaheadMs() const { return lookaheadMs; }
+    // Advanced setting: how far the ride leads the audio (0 = off). Safe on the audio thread.
+    void setLookaheadMs (int ms)
+    {
+        ms = std::max (0, std::min (ms, (int) (kMaxLookaheadSeconds * 1000.0)));
+        if (ms == lookaheadMs) return;
+        lookaheadMs = ms;
+        lookahead = std::max (1, (int) std::lround (lookaheadMs * 0.001 * sr));
+        for (auto& d : delay) std::fill (d.begin(), d.end(), 0.0f);
+        delayPos = 0;
+    }
     float getCurrentRideDb() const { return currentRideDb; }
     // Read mode: ignore the analysis and apply this gain (the ride Logic plays back from automation).
     void setFollow (bool on, float db) { if (! on) followPrev = db; followOn = on; followDb = db; }
@@ -302,7 +315,7 @@ private:
     }
 
     double sr = 0.0;
-    int hop = 441, lookahead = 1323;
+    int hop = 441, lookahead = 1323, lookaheadMs = 30;
     float smoothCoef = 0.001f;
     bool hfOn = true, analysisInitialised = false;
     std::vector<float> delay[kMaxChannels];

@@ -35,6 +35,9 @@ juce::AudioProcessorValueTreeState::ParameterLayout VocalRiderProcessor::createL
                                                          juce::StringArray { "Live", "Write", "Read" }, 0));
     l.add (std::make_unique<Param> (juce::ParameterID { "rideOut", 1 }, "Ride (dB)",
                                     Range (-18.0f, 12.0f, 0.01f), 0.0f));
+    // Advanced: how far ahead of the audio the ride is placed (reported to the host as latency)
+    l.add (std::make_unique<juce::AudioParameterChoice> (juce::ParameterID { "lookahead", 1 }, "Lookahead",
+                                                         juce::StringArray { "Off", "10 ms", "20 ms", "30 ms", "50 ms", "80 ms" }, 3));
     return l;
 }
 
@@ -56,6 +59,7 @@ VocalRiderProcessor::VocalRiderProcessor()
     pOutput       = apvts.getRawParameterValue ("output");
     pMode         = apvts.getRawParameterValue ("mode");
     pRideOut      = apvts.getRawParameterValue ("rideOut");
+    pLookahead    = apvts.getRawParameterValue ("lookahead");
     rideParam     = dynamic_cast<juce::AudioParameterFloat*> (apvts.getParameter ("rideOut"));
 }
 
@@ -76,6 +80,7 @@ bool VocalRiderProcessor::isBusesLayoutSupported (const BusesLayout& layouts) co
 
 void VocalRiderProcessor::prepareToPlay (double sampleRate, int)
 {
+    core.setLookaheadMs (kLookaheadChoicesMs[juce::jlimit (0, 5, (int) std::lround (pLookahead->load()))]);
     core.prepare (sampleRate);
     setLatencySamples (core.getLatencySamples());  // Logic compensates for the lookahead delay
     outGain.reset (sampleRate, 0.03);
@@ -104,6 +109,10 @@ void VocalRiderProcessor::processBlock (juce::AudioBuffer<float>& buffer, juce::
     const int n = buffer.getNumSamples();
     if (numCh < 1) return;
 
+    {   // Advanced > Lookahead changed? Apply it and tell the host about the new latency.
+        const int ms = kLookaheadChoicesMs[juce::jlimit (0, 5, (int) std::lround (pLookahead->load()))];
+        if (ms != core.getLookaheadMs()) { core.setLookaheadMs (ms); triggerAsyncUpdate(); }
+    }
     const int mode = juce::jlimit (0, 2, (int) std::lround (pMode->load()));
     core.setFollow (mode == 2, pRideOut->load());                 // READ: apply the recorded ride
     core.process (buffer.getArrayOfWritePointers(), numCh, n, readParams());

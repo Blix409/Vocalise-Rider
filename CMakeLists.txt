@@ -47,8 +47,9 @@ target_sources(VocalRider
         Source/PluginProcessor.h
         Source/RiderCore.h)
 
-# The Vocalise logo, built into the plugin as binary data (see Source/PluginEditor.cpp)
-juce_add_binary_data(VocalRiderAssets SOURCES Assets/logo.png)
+# The Vocalise logo and the guide web page (the "i" button), built into the plugin as binary data.
+# Rebuild the guide with: python3 Packaging/make_guide.py
+juce_add_binary_data(VocalRiderAssets SOURCES Assets/logo.png Assets/guide.html)
 
 # JUCE_DISPLAY_SPLASH_SCREEN=0 hides the "Made with JUCE" splash. This is only permitted with a
 # JUCE Indie/Pro license or under GPLv3 (the owner of this project has confirmed a license).
